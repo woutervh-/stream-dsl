@@ -1,5 +1,15 @@
 # Dependencies
-node_modules/
+#node_modules/
+# Except bug-fix in antlr4
+node_modules/*
+!node_modules/antlr4
+node_modules/antlr4/*
+!node_modules/antlr4/tree
+node_modules/antlr4/tree/*
+!node_modules/antlr4/tree/Tree.js
 
 # Compile output
 lib/
+
+# Log file
+*.log
