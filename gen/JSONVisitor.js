@@ -42,5 +42,29 @@ JSONVisitor.prototype.visitValue = function(ctx) {
 };
 
 
+// Visit a parse tree produced by JSONParser#str.
+JSONVisitor.prototype.visitStr = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by JSONParser#num.
+JSONVisitor.prototype.visitNum = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by JSONParser#bool.
+JSONVisitor.prototype.visitBool = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by JSONParser#nul.
+JSONVisitor.prototype.visitNul = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
 
 exports.JSONVisitor = JSONVisitor;
