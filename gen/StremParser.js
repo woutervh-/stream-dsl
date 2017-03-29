@@ -34,7 +34,7 @@ var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "\u0003\u0002\u0002\u0002\u001b\u0019\u0003\u0002\u0002\u0002\u001b\u001c",
     "\u0003\u0002\u0002\u0002\u001c\u001e\u0003\u0002\u0002\u0002\u001d\u001b",
     "\u0003\u0002\u0002\u0002\u001e\u001f\u0007\f\u0002\u0002\u001f.\u0003",
-    "\u0002\u0002\u0002 !\u0007\r\u0002\u0002!\"\u0007\u000f\u0002\u0002",
+    "\u0002\u0002\u0002 !\u0007\u000e\u0002\u0002!\"\u0007\u000f\u0002\u0002",
     "\"#\u0005\u0006\u0004\u0002#$\u0007\u0010\u0002\u0002$\'\u0005\b\u0005",
     "\u0002%&\u0007\u0011\u0002\u0002&(\u0005\u0006\u0004\u0002\'%\u0003",
     "\u0002\u0002\u0002\'(\u0003\u0002\u0002\u0002()\u0003\u0002\u0002\u0002",
@@ -42,8 +42,8 @@ var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "\u0002,.\u0005\u0006\u0004\u0002-\f\u0003\u0002\u0002\u0002-\u0011\u0003",
     "\u0002\u0002\u0002-\u0015\u0003\u0002\u0002\u0002- \u0003\u0002\u0002",
     "\u0002-+\u0003\u0002\u0002\u0002-,\u0003\u0002\u0002\u0002.7\u0003\u0002",
-    "\u0002\u0002/0\f\u0007\u0002\u000201\u0007\r\u0002\u000216\u0005\u0004",
-    "\u0003\b23\f\u0006\u0002\u000234\u0007\u000e\u0002\u000246\u0005\u0004",
+    "\u0002\u0002/0\f\u0007\u0002\u000201\u0007\u000b\u0002\u000216\u0005",
+    "\u0004\u0003\b23\f\u0006\u0002\u000234\u0007\r\u0002\u000246\u0005\u0004",
     "\u0003\u00075/\u0003\u0002\u0002\u000252\u0003\u0002\u0002\u000269\u0003",
     "\u0002\u0002\u000275\u0003\u0002\u0002\u000278\u0003\u0002\u0002\u0002",
     "8\u0005\u0003\u0002\u0002\u000297\u0003\u0002\u0002\u0002:;\b\u0004",
@@ -69,7 +69,7 @@ var decisionsToDFA = atn.decisionToState.map( function(ds, index) { return new a
 var sharedContextCache = new antlr4.PredictionContextCache();
 
 var literalNames = [ null, "'('", "')'", "'delay'", "'ms'", "'s'", "'min'", 
-                     "'h'", "'['", "','", "']'", "'->'", "'|'", "'{'", "'for'", 
+                     "'h'", "'['", "','", "']'", "'|'", "'->'", "'{'", "'for'", 
                      "'where'", "'}'", "'*'", "'/'", "'+'", "'-'" ];
 
 var symbolicNames = [ null, null, null, null, null, null, null, null, null, 
@@ -701,7 +701,7 @@ StremParser.prototype.source = function(_p) {
             this._ctx = localctx;
             _prevctx = localctx;
             this.state = 30;
-            this.match(StremParser.T__10);
+            this.match(StremParser.T__11);
             this.state = 31;
             this.match(StremParser.T__12);
             this.state = 32;
@@ -764,7 +764,7 @@ StremParser.prototype.source = function(_p) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 5)");
                     }
                     this.state = 46;
-                    this.match(StremParser.T__10);
+                    this.match(StremParser.T__8);
                     this.state = 47;
                     localctx.right = this.source(6);
                     break;
@@ -778,7 +778,7 @@ StremParser.prototype.source = function(_p) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 4)");
                     }
                     this.state = 49;
-                    this.match(StremParser.T__11);
+                    this.match(StremParser.T__10);
                     this.state = 50;
                     localctx.right = this.source(5);
                     break;

@@ -29,6 +29,10 @@ class Visitor extends StremVisitor {
         return this.visit(context.expression());
     }
 
+    visitSubSource(context) {
+        return this.visit(context.source());
+    }
+
     visitNumberExpression(context) {
         return fromValues([+context.getText()]);
     }
@@ -57,7 +61,7 @@ class Visitor extends StremVisitor {
     }
 }
 
-const input = "1 -> delay 1s 4 -> 5 | [2, 3]";
+const input = "1, delay 1s 4, 5 | 2, delay 0.5s 3";
 
 const chars = new antlr4.InputStream(input);
 const lexer = new StremLexer(chars);
