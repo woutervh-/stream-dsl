@@ -1,17 +1,18 @@
 grammar Strem;
 
 program
-  : expression
-  | source
+  : source
   ;
 
 source
   : '(' source ')' #subSource
+  | 'delay' amount=NUMBER unit=('ms' | 's' | 'min' | 'h') source #delay
   | '[' expression (',' expression)* ']' #values
   | left=source '->' right=source #sequence
   | left=source '|' right=source #parallel
   | '->' '{' expression 'for' name ('where' expression)? '}' #comprehension
   | name #namedSource
+  | expression #singleSource
   ;
 
 expression

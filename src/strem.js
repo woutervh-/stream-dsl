@@ -2,76 +2,10 @@ import antlr4 from 'antlr4/index';
 import {StremLexer} from '../gen/StremLexer';
 import {StremParser} from '../gen/StremParser';
 import {StremVisitor} from '../gen/StremVisitor';
-
-function stream(producer) {
-    const listeners = [];
-    let completed = false;
-    let errored = false;
-
-    const next = (value) => {
-        if (!completed && !errored) {
-            for (const listener of listeners) {
-                if (listener.next) {
-                    listener.next(value);
-                }
-            }
-        } else {
-            throw new Error('Producer cannot call next after completion or error.');
-        }
-    };
-
-    const complete = () => {
-        if (!completed && !errored) {
-            for (const listener of listeners) {
-                if (listener.complete) {
-                    listener.complete();
-                }
-            }
-        } else {
-            throw new Error('Producer cannot call complete after completion or error.');
-        }
-    };
-
-    const error = (error) => {
-        if (!completed && !errored) {
-            for (const listener of listeners) {
-                if (listener.error) {
-                    listener.error(error);
-                }
-            }
-        } else {
-            throw new Error('Producer cannot call complete after completion or error.');
-        }
-    };
-
-    const subscribe = () => {
-        producer.start({next, complete, error});
-    };
-
-    const unsubscribe = () => {
-
-    };
-
-    return {
-        subscribe: (listener) => {
-            listeners.push(listener);
-            if (listeners.length === 1) {
-                subscribe();
-            }
-            return {
-                unsubscribe: () => {
-                    const index = listeners.indexOf(listener);
-                    if (index >= 0) {
-                        listeners.splice(index, 1);
-                        if (listeners.length === 0) {
-                            unsubscribe();
-                        }
-                    }
-                }
-            };
-        }
-    };
-}
+import sequence from './stream/sequence';
+import parallel from './stream/parallel';
+import delay from './stream/delay';
+import fromValues from './stream/fromValues';
 
 class Visitor extends StremVisitor {
     visitProgram(context) {
@@ -81,19 +15,49 @@ class Visitor extends StremVisitor {
     visitSequence(context) {
         const left = this.visit(context.left);
         const right = this.visit(context.right);
-        return [...left, ...right];
+        return sequence(left, right);
     }
 
     visitValues(context) {
+        const values = this.visit(context.expression());
+        return values.reduce((left, right) => {
+            return sequence(left, right);
+        });
+    }
+
+    visitSingleSource(context) {
         return this.visit(context.expression());
     }
 
     visitNumberExpression(context) {
-        return +context.getText();
+        return fromValues([+context.getText()]);
+    }
+
+    visitParallel(context) {
+        const left = this.visit(context.left);
+        const right = this.visit(context.right);
+        return parallel(left, right);
+    }
+
+    visitDelay(context) {
+        let amount = +context.amount.text;
+        const unit = context.unit.text;
+        switch (unit) {
+            case 'h':
+                amount *= 60;
+            case 'min':
+                amount *= 60;
+            case 's':
+                amount *= 1e3;
+            case 'ms':
+                break;
+        }
+        const source = this.visit(context.source());
+        return delay(amount, source);
     }
 }
 
-const input = "[1, 2] -> [3, 4]";
+const input = "1 -> delay 1s 4 -> 5 | [2, 3]";
 
 const chars = new antlr4.InputStream(input);
 const lexer = new StremLexer(chars);
@@ -103,4 +67,11 @@ const tree = parser.program();
 const printer = new Visitor();
 const result = printer.visitProgram(tree);
 
-console.log(result);
+const subscription = result.subscribe({
+    next: (value) => console.log(value),
+    complete: () => {
+        subscription.unsubscribe();
+        console.log('Completed!');
+    },
+    error: (error) => console.error(error)
+});

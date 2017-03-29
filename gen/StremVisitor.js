@@ -24,6 +24,12 @@ StremVisitor.prototype.visitSequence = function(ctx) {
 };
 
 
+// Visit a parse tree produced by StremParser#delay.
+StremVisitor.prototype.visitDelay = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
 // Visit a parse tree produced by StremParser#namedSource.
 StremVisitor.prototype.visitNamedSource = function(ctx) {
   return this.visitChildren(ctx);
@@ -44,6 +50,12 @@ StremVisitor.prototype.visitParallel = function(ctx) {
 
 // Visit a parse tree produced by StremParser#values.
 StremVisitor.prototype.visitValues = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by StremParser#singleSource.
+StremVisitor.prototype.visitSingleSource = function(ctx) {
   return this.visitChildren(ctx);
 };
 
