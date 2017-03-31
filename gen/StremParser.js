@@ -6,60 +6,60 @@ var StremVisitor = require('./StremVisitor').StremVisitor;
 var grammarFileName = "Strem.g4";
 
 var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
-    "\u0003\u001aW\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
+    "\u0003\u0019V\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
     "\u0004\u0004\u0005\t\u0005\u0003\u0002\u0003\u0002\u0003\u0003\u0003",
     "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
     "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0007",
     "\u0003\u001a\n\u0003\f\u0003\u000e\u0003\u001d\u000b\u0003\u0003\u0003",
     "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
-    "\u0003\u0003\u0003\u0003\u0005\u0003(\n\u0003\u0003\u0003\u0003\u0003",
-    "\u0003\u0003\u0003\u0003\u0005\u0003.\n\u0003\u0003\u0003\u0003\u0003",
-    "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0007\u00036\n\u0003",
-    "\f\u0003\u000e\u00039\u000b\u0003\u0003\u0004\u0003\u0004\u0003\u0004",
-    "\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0005\u0004B\n\u0004",
+    "\u0003\u0003\u0005\u0003\'\n\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
+    "\u0003\u0003\u0005\u0003-\n\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
+    "\u0003\u0003\u0003\u0003\u0003\u0003\u0007\u00035\n\u0003\f\u0003\u000e",
+    "\u00038\u000b\u0003\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004",
+    "\u0003\u0004\u0003\u0004\u0003\u0004\u0005\u0004A\n\u0004\u0003\u0004",
     "\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004",
-    "\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004",
-    "\u0007\u0004P\n\u0004\f\u0004\u000e\u0004S\u000b\u0004\u0003\u0005\u0003",
-    "\u0005\u0003\u0005\u0002\u0004\u0004\u0006\u0006\u0002\u0004\u0006\b",
-    "\u0002\u0003\u0003\u0002\u0006\ta\u0002\n\u0003\u0002\u0002\u0002\u0004",
-    "-\u0003\u0002\u0002\u0002\u0006A\u0003\u0002\u0002\u0002\bT\u0003\u0002",
-    "\u0002\u0002\n\u000b\u0005\u0004\u0003\u0002\u000b\u0003\u0003\u0002",
-    "\u0002\u0002\f\r\b\u0003\u0001\u0002\r\u000e\u0007\u0003\u0002\u0002",
-    "\u000e\u000f\u0005\u0004\u0003\u0002\u000f\u0010\u0007\u0004\u0002\u0002",
-    "\u0010.\u0003\u0002\u0002\u0002\u0011\u0012\u0007\u0005\u0002\u0002",
-    "\u0012\u0013\u0007\u0019\u0002\u0002\u0013\u0014\t\u0002\u0002\u0002",
-    "\u0014.\u0005\u0004\u0003\t\u0015\u0016\u0007\n\u0002\u0002\u0016\u001b",
-    "\u0005\u0006\u0004\u0002\u0017\u0018\u0007\u000b\u0002\u0002\u0018\u001a",
-    "\u0005\u0006\u0004\u0002\u0019\u0017\u0003\u0002\u0002\u0002\u001a\u001d",
-    "\u0003\u0002\u0002\u0002\u001b\u0019\u0003\u0002\u0002\u0002\u001b\u001c",
-    "\u0003\u0002\u0002\u0002\u001c\u001e\u0003\u0002\u0002\u0002\u001d\u001b",
-    "\u0003\u0002\u0002\u0002\u001e\u001f\u0007\f\u0002\u0002\u001f.\u0003",
-    "\u0002\u0002\u0002 !\u0007\u000e\u0002\u0002!\"\u0007\u000f\u0002\u0002",
-    "\"#\u0005\u0006\u0004\u0002#$\u0007\u0010\u0002\u0002$\'\u0005\b\u0005",
-    "\u0002%&\u0007\u0011\u0002\u0002&(\u0005\u0006\u0004\u0002\'%\u0003",
-    "\u0002\u0002\u0002\'(\u0003\u0002\u0002\u0002()\u0003\u0002\u0002\u0002",
-    ")*\u0007\u0012\u0002\u0002*.\u0003\u0002\u0002\u0002+.\u0005\b\u0005",
-    "\u0002,.\u0005\u0006\u0004\u0002-\f\u0003\u0002\u0002\u0002-\u0011\u0003",
-    "\u0002\u0002\u0002-\u0015\u0003\u0002\u0002\u0002- \u0003\u0002\u0002",
-    "\u0002-+\u0003\u0002\u0002\u0002-,\u0003\u0002\u0002\u0002.7\u0003\u0002",
-    "\u0002\u0002/0\f\u0007\u0002\u000201\u0007\u000b\u0002\u000216\u0005",
-    "\u0004\u0003\b23\f\u0006\u0002\u000234\u0007\r\u0002\u000246\u0005\u0004",
-    "\u0003\u00075/\u0003\u0002\u0002\u000252\u0003\u0002\u0002\u000269\u0003",
-    "\u0002\u0002\u000275\u0003\u0002\u0002\u000278\u0003\u0002\u0002\u0002",
-    "8\u0005\u0003\u0002\u0002\u000297\u0003\u0002\u0002\u0002:;\b\u0004",
-    "\u0001\u0002;<\u0007\u0003\u0002\u0002<=\u0005\u0006\u0004\u0002=>\u0007",
-    "\u0004\u0002\u0002>B\u0003\u0002\u0002\u0002?B\u0007\u0019\u0002\u0002",
-    "@B\u0005\b\u0005\u0002A:\u0003\u0002\u0002\u0002A?\u0003\u0002\u0002",
-    "\u0002A@\u0003\u0002\u0002\u0002BQ\u0003\u0002\u0002\u0002CD\f\u0007",
-    "\u0002\u0002DE\u0007\u0013\u0002\u0002EP\u0005\u0006\u0004\bFG\f\u0006",
-    "\u0002\u0002GH\u0007\u0014\u0002\u0002HP\u0005\u0006\u0004\u0007IJ\f",
-    "\u0005\u0002\u0002JK\u0007\u0015\u0002\u0002KP\u0005\u0006\u0004\u0006",
-    "LM\f\u0004\u0002\u0002MN\u0007\u0016\u0002\u0002NP\u0005\u0006\u0004",
-    "\u0005OC\u0003\u0002\u0002\u0002OF\u0003\u0002\u0002\u0002OI\u0003\u0002",
-    "\u0002\u0002OL\u0003\u0002\u0002\u0002PS\u0003\u0002\u0002\u0002QO\u0003",
-    "\u0002\u0002\u0002QR\u0003\u0002\u0002\u0002R\u0007\u0003\u0002\u0002",
-    "\u0002SQ\u0003\u0002\u0002\u0002TU\u0007\u0017\u0002\u0002U\t\u0003",
-    "\u0002\u0002\u0002\n\u001b\'-57AOQ"].join("");
+    "\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0003\u0004\u0007\u0004",
+    "O\n\u0004\f\u0004\u000e\u0004R\u000b\u0004\u0003\u0005\u0003\u0005\u0003",
+    "\u0005\u0002\u0004\u0004\u0006\u0006\u0002\u0004\u0006\b\u0002\u0003",
+    "\u0003\u0002\u0006\t`\u0002\n\u0003\u0002\u0002\u0002\u0004,\u0003\u0002",
+    "\u0002\u0002\u0006@\u0003\u0002\u0002\u0002\bS\u0003\u0002\u0002\u0002",
+    "\n\u000b\u0005\u0004\u0003\u0002\u000b\u0003\u0003\u0002\u0002\u0002",
+    "\f\r\b\u0003\u0001\u0002\r\u000e\u0007\u0003\u0002\u0002\u000e\u000f",
+    "\u0005\u0004\u0003\u0002\u000f\u0010\u0007\u0004\u0002\u0002\u0010-",
+    "\u0003\u0002\u0002\u0002\u0011\u0012\u0007\u0005\u0002\u0002\u0012\u0013",
+    "\u0007\u0018\u0002\u0002\u0013\u0014\t\u0002\u0002\u0002\u0014-\u0005",
+    "\u0004\u0003\t\u0015\u0016\u0007\n\u0002\u0002\u0016\u001b\u0005\u0006",
+    "\u0004\u0002\u0017\u0018\u0007\u000b\u0002\u0002\u0018\u001a\u0005\u0006",
+    "\u0004\u0002\u0019\u0017\u0003\u0002\u0002\u0002\u001a\u001d\u0003\u0002",
+    "\u0002\u0002\u001b\u0019\u0003\u0002\u0002\u0002\u001b\u001c\u0003\u0002",
+    "\u0002\u0002\u001c\u001e\u0003\u0002\u0002\u0002\u001d\u001b\u0003\u0002",
+    "\u0002\u0002\u001e\u001f\u0007\f\u0002\u0002\u001f-\u0003\u0002\u0002",
+    "\u0002 !\u0007\u000e\u0002\u0002!\"\u0005\u0006\u0004\u0002\"#\u0007",
+    "\u000f\u0002\u0002#&\u0005\b\u0005\u0002$%\u0007\u0010\u0002\u0002%",
+    "\'\u0005\u0006\u0004\u0002&$\u0003\u0002\u0002\u0002&\'\u0003\u0002",
+    "\u0002\u0002\'(\u0003\u0002\u0002\u0002()\u0007\u0011\u0002\u0002)-",
+    "\u0003\u0002\u0002\u0002*-\u0005\b\u0005\u0002+-\u0005\u0006\u0004\u0002",
+    ",\f\u0003\u0002\u0002\u0002,\u0011\u0003\u0002\u0002\u0002,\u0015\u0003",
+    "\u0002\u0002\u0002, \u0003\u0002\u0002\u0002,*\u0003\u0002\u0002\u0002",
+    ",+\u0003\u0002\u0002\u0002-6\u0003\u0002\u0002\u0002./\f\u0007\u0002",
+    "\u0002/0\u0007\u000b\u0002\u000205\u0005\u0004\u0003\b12\f\u0006\u0002",
+    "\u000223\u0007\r\u0002\u000235\u0005\u0004\u0003\u00074.\u0003\u0002",
+    "\u0002\u000241\u0003\u0002\u0002\u000258\u0003\u0002\u0002\u000264\u0003",
+    "\u0002\u0002\u000267\u0003\u0002\u0002\u00027\u0005\u0003\u0002\u0002",
+    "\u000286\u0003\u0002\u0002\u00029:\b\u0004\u0001\u0002:;\u0007\u0003",
+    "\u0002\u0002;<\u0005\u0006\u0004\u0002<=\u0007\u0004\u0002\u0002=A\u0003",
+    "\u0002\u0002\u0002>A\u0007\u0018\u0002\u0002?A\u0005\b\u0005\u0002@",
+    "9\u0003\u0002\u0002\u0002@>\u0003\u0002\u0002\u0002@?\u0003\u0002\u0002",
+    "\u0002AP\u0003\u0002\u0002\u0002BC\f\u0007\u0002\u0002CD\u0007\u0012",
+    "\u0002\u0002DO\u0005\u0006\u0004\bEF\f\u0006\u0002\u0002FG\u0007\u0013",
+    "\u0002\u0002GO\u0005\u0006\u0004\u0007HI\f\u0005\u0002\u0002IJ\u0007",
+    "\u0014\u0002\u0002JO\u0005\u0006\u0004\u0006KL\f\u0004\u0002\u0002L",
+    "M\u0007\u0015\u0002\u0002MO\u0005\u0006\u0004\u0005NB\u0003\u0002\u0002",
+    "\u0002NE\u0003\u0002\u0002\u0002NH\u0003\u0002\u0002\u0002NK\u0003\u0002",
+    "\u0002\u0002OR\u0003\u0002\u0002\u0002PN\u0003\u0002\u0002\u0002PQ\u0003",
+    "\u0002\u0002\u0002Q\u0007\u0003\u0002\u0002\u0002RP\u0003\u0002\u0002",
+    "\u0002ST\u0007\u0016\u0002\u0002T\t\u0003\u0002\u0002\u0002\n\u001b",
+    "&,46@NP"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -69,12 +69,12 @@ var decisionsToDFA = atn.decisionToState.map( function(ds, index) { return new a
 var sharedContextCache = new antlr4.PredictionContextCache();
 
 var literalNames = [ null, "'('", "')'", "'delay'", "'ms'", "'s'", "'min'", 
-                     "'h'", "'['", "','", "']'", "'|'", "'->'", "'{'", "'for'", 
+                     "'h'", "'['", "','", "']'", "'|'", "'{'", "'for'", 
                      "'where'", "'}'", "'*'", "'/'", "'+'", "'-'" ];
 
 var symbolicNames = [ null, null, null, null, null, null, null, null, null, 
                       null, null, null, null, null, null, null, null, null, 
-                      null, null, null, "ID", "STRING", "NUMBER", "WS" ];
+                      null, null, "ID", "STRING", "NUMBER", "WS" ];
 
 var ruleNames =  [ "program", "source", "expression", "name" ];
 
@@ -116,11 +116,10 @@ StremParser.T__15 = 16;
 StremParser.T__16 = 17;
 StremParser.T__17 = 18;
 StremParser.T__18 = 19;
-StremParser.T__19 = 20;
-StremParser.ID = 21;
-StremParser.STRING = 22;
-StremParser.NUMBER = 23;
-StremParser.WS = 24;
+StremParser.ID = 20;
+StremParser.STRING = 21;
+StremParser.NUMBER = 22;
+StremParser.WS = 23;
 
 StremParser.RULE_program = 0;
 StremParser.RULE_source = 1;
@@ -633,7 +632,7 @@ StremParser.prototype.source = function(_p) {
     var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 43;
+        this.state = 42;
         this._errHandler.sync(this);
         var la_ = this._interp.adaptivePredict(this._input,2,this._ctx);
         switch(la_) {
@@ -703,32 +702,30 @@ StremParser.prototype.source = function(_p) {
             this.state = 30;
             this.match(StremParser.T__11);
             this.state = 31;
-            this.match(StremParser.T__12);
-            this.state = 32;
             this.expression(0);
+            this.state = 32;
+            this.match(StremParser.T__12);
             this.state = 33;
-            this.match(StremParser.T__13);
-            this.state = 34;
             this.name();
-            this.state = 37;
+            this.state = 36;
             this._errHandler.sync(this);
             _la = this._input.LA(1);
-            if(_la===StremParser.T__14) {
+            if(_la===StremParser.T__13) {
+                this.state = 34;
+                this.match(StremParser.T__13);
                 this.state = 35;
-                this.match(StremParser.T__14);
-                this.state = 36;
                 this.expression(0);
             }
 
-            this.state = 39;
-            this.match(StremParser.T__15);
+            this.state = 38;
+            this.match(StremParser.T__14);
             break;
 
         case 5:
             localctx = new NamedSourceContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
-            this.state = 41;
+            this.state = 40;
             this.name();
             break;
 
@@ -736,13 +733,13 @@ StremParser.prototype.source = function(_p) {
             localctx = new SingleSourceContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
-            this.state = 42;
+            this.state = 41;
             this.expression(0);
             break;
 
         }
         this._ctx.stop = this._input.LT(-1);
-        this.state = 53;
+        this.state = 52;
         this._errHandler.sync(this);
         var _alt = this._interp.adaptivePredict(this._input,4,this._ctx)
         while(_alt!=2 && _alt!=antlr4.atn.ATN.INVALID_ALT_NUMBER) {
@@ -751,7 +748,7 @@ StremParser.prototype.source = function(_p) {
                     this.triggerExitRuleEvent();
                 }
                 _prevctx = localctx;
-                this.state = 51;
+                this.state = 50;
                 this._errHandler.sync(this);
                 var la_ = this._interp.adaptivePredict(this._input,3,this._ctx);
                 switch(la_) {
@@ -759,13 +756,13 @@ StremParser.prototype.source = function(_p) {
                     localctx = new SequenceContext(this, new SourceContext(this, _parentctx, _parentState));
                     localctx.left = _prevctx;
                     this.pushNewRecursionContext(localctx, _startState, StremParser.RULE_source);
-                    this.state = 45;
+                    this.state = 44;
                     if (!( this.precpred(this._ctx, 5))) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 5)");
                     }
-                    this.state = 46;
+                    this.state = 45;
                     this.match(StremParser.T__8);
-                    this.state = 47;
+                    this.state = 46;
                     localctx.right = this.source(6);
                     break;
 
@@ -773,19 +770,19 @@ StremParser.prototype.source = function(_p) {
                     localctx = new ParallelContext(this, new SourceContext(this, _parentctx, _parentState));
                     localctx.left = _prevctx;
                     this.pushNewRecursionContext(localctx, _startState, StremParser.RULE_source);
-                    this.state = 48;
+                    this.state = 47;
                     if (!( this.precpred(this._ctx, 4))) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 4)");
                     }
-                    this.state = 49;
+                    this.state = 48;
                     this.match(StremParser.T__10);
-                    this.state = 50;
+                    this.state = 49;
                     localctx.right = this.source(5);
                     break;
 
                 } 
             }
-            this.state = 55;
+            this.state = 54;
             this._errHandler.sync(this);
             _alt = this._interp.adaptivePredict(this._input,4,this._ctx);
         }
@@ -1036,7 +1033,7 @@ StremParser.prototype.expression = function(_p) {
     this.enterRecursionRule(localctx, 4, StremParser.RULE_expression, _p);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 63;
+        this.state = 62;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case StremParser.T__0:
@@ -1044,32 +1041,32 @@ StremParser.prototype.expression = function(_p) {
             this._ctx = localctx;
             _prevctx = localctx;
 
-            this.state = 57;
+            this.state = 56;
             this.match(StremParser.T__0);
-            this.state = 58;
+            this.state = 57;
             this.expression(0);
-            this.state = 59;
+            this.state = 58;
             this.match(StremParser.T__1);
             break;
         case StremParser.NUMBER:
             localctx = new NumberExpressionContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
-            this.state = 61;
+            this.state = 60;
             this.match(StremParser.NUMBER);
             break;
         case StremParser.ID:
             localctx = new NamedExpressionContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
-            this.state = 62;
+            this.state = 61;
             this.name();
             break;
         default:
             throw new antlr4.error.NoViableAltException(this);
         }
         this._ctx.stop = this._input.LT(-1);
-        this.state = 79;
+        this.state = 78;
         this._errHandler.sync(this);
         var _alt = this._interp.adaptivePredict(this._input,7,this._ctx)
         while(_alt!=2 && _alt!=antlr4.atn.ATN.INVALID_ALT_NUMBER) {
@@ -1078,7 +1075,7 @@ StremParser.prototype.expression = function(_p) {
                     this.triggerExitRuleEvent();
                 }
                 _prevctx = localctx;
-                this.state = 77;
+                this.state = 76;
                 this._errHandler.sync(this);
                 var la_ = this._interp.adaptivePredict(this._input,6,this._ctx);
                 switch(la_) {
@@ -1086,13 +1083,13 @@ StremParser.prototype.expression = function(_p) {
                     localctx = new MultiplyContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     localctx.left = _prevctx;
                     this.pushNewRecursionContext(localctx, _startState, StremParser.RULE_expression);
-                    this.state = 65;
+                    this.state = 64;
                     if (!( this.precpred(this._ctx, 5))) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 5)");
                     }
+                    this.state = 65;
+                    this.match(StremParser.T__15);
                     this.state = 66;
-                    this.match(StremParser.T__16);
-                    this.state = 67;
                     localctx.right = this.expression(6);
                     break;
 
@@ -1100,13 +1097,13 @@ StremParser.prototype.expression = function(_p) {
                     localctx = new DivideContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     localctx.left = _prevctx;
                     this.pushNewRecursionContext(localctx, _startState, StremParser.RULE_expression);
-                    this.state = 68;
+                    this.state = 67;
                     if (!( this.precpred(this._ctx, 4))) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 4)");
                     }
+                    this.state = 68;
+                    this.match(StremParser.T__16);
                     this.state = 69;
-                    this.match(StremParser.T__17);
-                    this.state = 70;
                     localctx.right = this.expression(5);
                     break;
 
@@ -1114,13 +1111,13 @@ StremParser.prototype.expression = function(_p) {
                     localctx = new AddContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     localctx.left = _prevctx;
                     this.pushNewRecursionContext(localctx, _startState, StremParser.RULE_expression);
-                    this.state = 71;
+                    this.state = 70;
                     if (!( this.precpred(this._ctx, 3))) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 3)");
                     }
+                    this.state = 71;
+                    this.match(StremParser.T__17);
                     this.state = 72;
-                    this.match(StremParser.T__18);
-                    this.state = 73;
                     localctx.right = this.expression(4);
                     break;
 
@@ -1128,19 +1125,19 @@ StremParser.prototype.expression = function(_p) {
                     localctx = new SubtractContext(this, new ExpressionContext(this, _parentctx, _parentState));
                     localctx.left = _prevctx;
                     this.pushNewRecursionContext(localctx, _startState, StremParser.RULE_expression);
-                    this.state = 74;
+                    this.state = 73;
                     if (!( this.precpred(this._ctx, 2))) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 2)");
                     }
+                    this.state = 74;
+                    this.match(StremParser.T__18);
                     this.state = 75;
-                    this.match(StremParser.T__19);
-                    this.state = 76;
                     localctx.right = this.expression(3);
                     break;
 
                 } 
             }
-            this.state = 81;
+            this.state = 80;
             this._errHandler.sync(this);
             _alt = this._interp.adaptivePredict(this._input,7,this._ctx);
         }
@@ -1198,7 +1195,7 @@ StremParser.prototype.name = function() {
     this.enterRule(localctx, 6, StremParser.RULE_name);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 82;
+        this.state = 81;
         this.match(StremParser.ID);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {

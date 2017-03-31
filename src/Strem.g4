@@ -10,7 +10,7 @@ source
   | '[' expression (',' expression)* ']' #values
   | left=source ',' right=source #sequence
   | left=source '|' right=source #parallel
-  | '->' '{' expression 'for' name ('where' expression)? '}' #comprehension
+  | '{' expression 'for' name ('where' expression)? '}' #comprehension
   | name #namedSource
   | expression #singleSource
   ;
@@ -28,7 +28,7 @@ expression
 name : ID;
 
 ID
- : [a-zA-Z_]+ [0-9a-zA-Z_]*
+ : [a-zA-Z_] [0-9a-zA-Z_]*
  ;
 
 STRING
