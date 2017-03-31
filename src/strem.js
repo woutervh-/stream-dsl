@@ -3,8 +3,8 @@ import {StremLexer} from '../gen/StremLexer';
 import {StremParser} from '../gen/StremParser';
 import {StremVisitor} from '../gen/StremVisitor';
 import create from './stream/create';
-import sequence from './stream/generators/sequence';
-import parallel from './stream/generators/parallel';
+import follow from './stream/generators/follow';
+import merge from './stream/generators/merge';
 import delay from './stream/generators/delay';
 import fromValues from './stream/generators/fromValues';
 import map from './stream/operators/map';
@@ -20,16 +20,16 @@ class Visitor extends StremVisitor {
         return this.visit(context.children[0]);
     }
 
-    visitSequence(context) {
+    visitFollow(context) {
         const left = this.visit(context.left);
         const right = this.visit(context.right);
-        return sequence(left, right);
+        return follow(left, right);
     }
 
     visitValues(context) {
         const values = this.visit(context.expression());
         return values.reduce((left, right) => {
-            return sequence(left, right);
+            return follow(left, right);
         });
     }
 
@@ -45,10 +45,10 @@ class Visitor extends StremVisitor {
         return fromValues([+context.getText()]);
     }
 
-    visitParallel(context) {
+    visitMerge(context) {
         const left = this.visit(context.left);
         const right = this.visit(context.right);
-        return parallel(left, right);
+        return merge(left, right);
     }
 
     visitDelay(context) {
@@ -72,10 +72,10 @@ class Visitor extends StremVisitor {
         return this.visit(context.name());
     }
 
-    visitChain(context) {
-        const left = this.visit(context.left);
+    visitCompose(context) {
+        const source = this.visit(context.left);
         const sourceFactory = this.visit(context.sourceFactory());
-        return sourceFactory(left);
+        return sourceFactory(source);
     }
 
     visitNamedSourceFactory(context) {
@@ -116,22 +116,6 @@ function magic(input, ...streams) {
     return printer.visitProgram(tree);
 }
 
-const multiplier = (factor) => (source) => {
-    let subscription;
-
-    return create({
-        start: (listener) => {
-            subscription = source.subscribe({
-                next: (value) => {
-                    listener.next(value * factor);
-                },
-                complete: () => listener.complete(),
-                error: (error) => listener.error(error)
-            });
-        },
-        stop: () => subscription.unsubscribe()
-    });
-};
 const whizard = magic`(1 | 1, delay 1s 2.5 -> map ${x => x * 2} | 3, delay 0.5s 4) -> filter ${x => x % 2 === 1}`;
 
 const subscription = whizard.subscribe({

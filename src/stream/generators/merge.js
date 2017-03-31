@@ -1,6 +1,6 @@
 import create from '../create';
 
-export default function parallel(left, right) {
+export default function merge(left, right) {
     let leftSubscription;
     let rightSubscription;
     let leftCompleted = false;

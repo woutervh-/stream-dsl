@@ -203,66 +203,6 @@ SourceContext.prototype.copyFrom = function(ctx) {
     antlr4.ParserRuleContext.prototype.copyFrom.call(this, ctx);
 };
 
-function SequenceContext(parser, ctx) {
-	SourceContext.call(this, parser);
-    this.left = null; // SourceContext;
-    this.right = null; // SourceContext;
-    SourceContext.prototype.copyFrom.call(this, ctx);
-    return this;
-}
-
-SequenceContext.prototype = Object.create(SourceContext.prototype);
-SequenceContext.prototype.constructor = SequenceContext;
-
-StremParser.SequenceContext = SequenceContext;
-
-SequenceContext.prototype.source = function(i) {
-    if(i===undefined) {
-        i = null;
-    }
-    if(i===null) {
-        return this.getTypedRuleContexts(SourceContext);
-    } else {
-        return this.getTypedRuleContext(SourceContext,i);
-    }
-};
-SequenceContext.prototype.accept = function(visitor) {
-    if ( visitor instanceof StremVisitor ) {
-        return visitor.visitSequence(this);
-    } else {
-        return visitor.visitChildren(this);
-    }
-};
-
-
-function ChainContext(parser, ctx) {
-	SourceContext.call(this, parser);
-    this.left = null; // SourceContext;
-    SourceContext.prototype.copyFrom.call(this, ctx);
-    return this;
-}
-
-ChainContext.prototype = Object.create(SourceContext.prototype);
-ChainContext.prototype.constructor = ChainContext;
-
-StremParser.ChainContext = ChainContext;
-
-ChainContext.prototype.sourceFactory = function() {
-    return this.getTypedRuleContext(SourceFactoryContext,0);
-};
-
-ChainContext.prototype.source = function() {
-    return this.getTypedRuleContext(SourceContext,0);
-};
-ChainContext.prototype.accept = function(visitor) {
-    if ( visitor instanceof StremVisitor ) {
-        return visitor.visitChain(this);
-    } else {
-        return visitor.visitChildren(this);
-    }
-};
-
-
 function DelayContext(parser, ctx) {
 	SourceContext.call(this, parser);
     this.amount = null; // Token;
@@ -338,95 +278,33 @@ SubSourceContext.prototype.accept = function(visitor) {
 };
 
 
-function ParallelContext(parser, ctx) {
-	SourceContext.call(this, parser);
-    this.left = null; // SourceContext;
-    this.right = null; // SourceContext;
-    SourceContext.prototype.copyFrom.call(this, ctx);
-    return this;
-}
-
-ParallelContext.prototype = Object.create(SourceContext.prototype);
-ParallelContext.prototype.constructor = ParallelContext;
-
-StremParser.ParallelContext = ParallelContext;
-
-ParallelContext.prototype.source = function(i) {
-    if(i===undefined) {
-        i = null;
-    }
-    if(i===null) {
-        return this.getTypedRuleContexts(SourceContext);
-    } else {
-        return this.getTypedRuleContext(SourceContext,i);
-    }
-};
-ParallelContext.prototype.accept = function(visitor) {
-    if ( visitor instanceof StremVisitor ) {
-        return visitor.visitParallel(this);
-    } else {
-        return visitor.visitChildren(this);
-    }
-};
-
-
-function SequenceContext(parser, ctx) {
-	SourceContext.call(this, parser);
-    this.left = null; // SourceContext;
-    this.right = null; // SourceContext;
-    SourceContext.prototype.copyFrom.call(this, ctx);
-    return this;
-}
-
-SequenceContext.prototype = Object.create(SourceContext.prototype);
-SequenceContext.prototype.constructor = SequenceContext;
-
-StremParser.SequenceContext = SequenceContext;
-
-SequenceContext.prototype.source = function(i) {
-    if(i===undefined) {
-        i = null;
-    }
-    if(i===null) {
-        return this.getTypedRuleContexts(SourceContext);
-    } else {
-        return this.getTypedRuleContext(SourceContext,i);
-    }
-};
-SequenceContext.prototype.accept = function(visitor) {
-    if ( visitor instanceof StremVisitor ) {
-        return visitor.visitSequence(this);
-    } else {
-        return visitor.visitChildren(this);
-    }
-};
-
-function ChainContext(parser, ctx) {
+function ComposeContext(parser, ctx) {
 	SourceContext.call(this, parser);
     this.left = null; // SourceContext;
     SourceContext.prototype.copyFrom.call(this, ctx);
     return this;
 }
 
-ChainContext.prototype = Object.create(SourceContext.prototype);
-ChainContext.prototype.constructor = ChainContext;
+ComposeContext.prototype = Object.create(SourceContext.prototype);
+ComposeContext.prototype.constructor = ComposeContext;
 
-StremParser.ChainContext = ChainContext;
+StremParser.ComposeContext = ComposeContext;
 
-ChainContext.prototype.sourceFactory = function() {
+ComposeContext.prototype.sourceFactory = function() {
     return this.getTypedRuleContext(SourceFactoryContext,0);
 };
 
-ChainContext.prototype.source = function() {
+ComposeContext.prototype.source = function() {
     return this.getTypedRuleContext(SourceContext,0);
 };
-ChainContext.prototype.accept = function(visitor) {
+ComposeContext.prototype.accept = function(visitor) {
     if ( visitor instanceof StremVisitor ) {
-        return visitor.visitChain(this);
+        return visitor.visitCompose(this);
     } else {
         return visitor.visitChildren(this);
     }
 };
+
 
 function DelayContext(parser, ctx) {
 	SourceContext.call(this, parser);
@@ -500,32 +378,28 @@ SubSourceContext.prototype.accept = function(visitor) {
     }
 };
 
-function ParallelContext(parser, ctx) {
+function ComposeContext(parser, ctx) {
 	SourceContext.call(this, parser);
     this.left = null; // SourceContext;
-    this.right = null; // SourceContext;
     SourceContext.prototype.copyFrom.call(this, ctx);
     return this;
 }
 
-ParallelContext.prototype = Object.create(SourceContext.prototype);
-ParallelContext.prototype.constructor = ParallelContext;
+ComposeContext.prototype = Object.create(SourceContext.prototype);
+ComposeContext.prototype.constructor = ComposeContext;
 
-StremParser.ParallelContext = ParallelContext;
+StremParser.ComposeContext = ComposeContext;
 
-ParallelContext.prototype.source = function(i) {
-    if(i===undefined) {
-        i = null;
-    }
-    if(i===null) {
-        return this.getTypedRuleContexts(SourceContext);
-    } else {
-        return this.getTypedRuleContext(SourceContext,i);
-    }
+ComposeContext.prototype.sourceFactory = function() {
+    return this.getTypedRuleContext(SourceFactoryContext,0);
 };
-ParallelContext.prototype.accept = function(visitor) {
+
+ComposeContext.prototype.source = function() {
+    return this.getTypedRuleContext(SourceContext,0);
+};
+ComposeContext.prototype.accept = function(visitor) {
     if ( visitor instanceof StremVisitor ) {
-        return visitor.visitParallel(this);
+        return visitor.visitCompose(this);
     } else {
         return visitor.visitChildren(this);
     }
@@ -560,6 +434,37 @@ ValuesContext.prototype.accept = function(visitor) {
     }
 };
 
+function MergeContext(parser, ctx) {
+	SourceContext.call(this, parser);
+    this.left = null; // SourceContext;
+    this.right = null; // SourceContext;
+    SourceContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+MergeContext.prototype = Object.create(SourceContext.prototype);
+MergeContext.prototype.constructor = MergeContext;
+
+StremParser.MergeContext = MergeContext;
+
+MergeContext.prototype.source = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(SourceContext);
+    } else {
+        return this.getTypedRuleContext(SourceContext,i);
+    }
+};
+MergeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof StremVisitor ) {
+        return visitor.visitMerge(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
 function SingleSourceContext(parser, ctx) {
 	SourceContext.call(this, parser);
     SourceContext.prototype.copyFrom.call(this, ctx);
@@ -577,6 +482,69 @@ SingleSourceContext.prototype.expression = function() {
 SingleSourceContext.prototype.accept = function(visitor) {
     if ( visitor instanceof StremVisitor ) {
         return visitor.visitSingleSource(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+function FollowContext(parser, ctx) {
+	SourceContext.call(this, parser);
+    this.left = null; // SourceContext;
+    this.right = null; // SourceContext;
+    SourceContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+FollowContext.prototype = Object.create(SourceContext.prototype);
+FollowContext.prototype.constructor = FollowContext;
+
+StremParser.FollowContext = FollowContext;
+
+FollowContext.prototype.source = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(SourceContext);
+    } else {
+        return this.getTypedRuleContext(SourceContext,i);
+    }
+};
+FollowContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof StremVisitor ) {
+        return visitor.visitFollow(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function MergeContext(parser, ctx) {
+	SourceContext.call(this, parser);
+    this.left = null; // SourceContext;
+    this.right = null; // SourceContext;
+    SourceContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+MergeContext.prototype = Object.create(SourceContext.prototype);
+MergeContext.prototype.constructor = MergeContext;
+
+StremParser.MergeContext = MergeContext;
+
+MergeContext.prototype.source = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(SourceContext);
+    } else {
+        return this.getTypedRuleContext(SourceContext,i);
+    }
+};
+MergeContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof StremVisitor ) {
+        return visitor.visitMerge(this);
     } else {
         return visitor.visitChildren(this);
     }
@@ -600,6 +568,38 @@ SingleSourceContext.prototype.expression = function() {
 SingleSourceContext.prototype.accept = function(visitor) {
     if ( visitor instanceof StremVisitor ) {
         return visitor.visitSingleSource(this);
+    } else {
+        return visitor.visitChildren(this);
+    }
+};
+
+
+function FollowContext(parser, ctx) {
+	SourceContext.call(this, parser);
+    this.left = null; // SourceContext;
+    this.right = null; // SourceContext;
+    SourceContext.prototype.copyFrom.call(this, ctx);
+    return this;
+}
+
+FollowContext.prototype = Object.create(SourceContext.prototype);
+FollowContext.prototype.constructor = FollowContext;
+
+StremParser.FollowContext = FollowContext;
+
+FollowContext.prototype.source = function(i) {
+    if(i===undefined) {
+        i = null;
+    }
+    if(i===null) {
+        return this.getTypedRuleContexts(SourceContext);
+    } else {
+        return this.getTypedRuleContext(SourceContext,i);
+    }
+};
+FollowContext.prototype.accept = function(visitor) {
+    if ( visitor instanceof StremVisitor ) {
+        return visitor.visitFollow(this);
     } else {
         return visitor.visitChildren(this);
     }
@@ -715,7 +715,7 @@ StremParser.prototype.source = function(_p) {
                 var la_ = this._interp.adaptivePredict(this._input,2,this._ctx);
                 switch(la_) {
                 case 1:
-                    localctx = new SequenceContext(this, new SourceContext(this, _parentctx, _parentState));
+                    localctx = new FollowContext(this, new SourceContext(this, _parentctx, _parentState));
                     localctx.left = _prevctx;
                     this.pushNewRecursionContext(localctx, _startState, StremParser.RULE_source);
                     this.state = 36;
@@ -729,7 +729,7 @@ StremParser.prototype.source = function(_p) {
                     break;
 
                 case 2:
-                    localctx = new ParallelContext(this, new SourceContext(this, _parentctx, _parentState));
+                    localctx = new MergeContext(this, new SourceContext(this, _parentctx, _parentState));
                     localctx.left = _prevctx;
                     this.pushNewRecursionContext(localctx, _startState, StremParser.RULE_source);
                     this.state = 39;
@@ -743,7 +743,7 @@ StremParser.prototype.source = function(_p) {
                     break;
 
                 case 3:
-                    localctx = new ChainContext(this, new SourceContext(this, _parentctx, _parentState));
+                    localctx = new ComposeContext(this, new SourceContext(this, _parentctx, _parentState));
                     localctx.left = _prevctx;
                     this.pushNewRecursionContext(localctx, _startState, StremParser.RULE_source);
                     this.state = 42;

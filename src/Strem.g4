@@ -8,9 +8,9 @@ source
   : '(' source ')' #subSource
   | 'delay' amount=NUMBER unit=('ms' | 's' | 'min' | 'h') source #delay
   | '[' expression (',' expression)* ']' #values
-  | left=source ',' right=source #sequence
-  | left=source '->' sourceFactory #chain
-  | left=source '|' right=source #parallel
+  | left=source ',' right=source #follow
+  | left=source '->' sourceFactory #compose
+  | left=source '|' right=source #merge
   | name #namedSource
   | expression #singleSource
   ;
