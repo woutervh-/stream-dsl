@@ -94,7 +94,7 @@ class Visitor extends StremVisitor {
     }
 }
 
-function magic(input, ...streams) {
+export default function strem(input, ...streams) {
     const context = {};
     let result = '';
     for (let i = 0; i < input.length; i++) {
@@ -114,14 +114,3 @@ function magic(input, ...streams) {
     const printer = new Visitor(context);
     return printer.visitProgram(tree);
 }
-
-const whizard = magic`(1.5 | 2, 2.5 -> delay 1s -> map ${x => x * 2} | 1, 2 -> delay 0.5s) -> filter ${x => x % 2 === 1} -> map ${x => x - 1}`;
-
-const subscription = whizard.subscribe({
-    next: (value) => console.log(value),
-    complete: () => {
-        subscription.unsubscribe();
-        console.log('Completed!');
-    },
-    error: (error) => console.error(error)
-});
