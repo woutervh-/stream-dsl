@@ -3,10 +3,12 @@ import {StremLexer} from '../gen/StremLexer';
 import {StremParser} from '../gen/StremParser';
 import {StremVisitor} from '../gen/StremVisitor';
 import create from './stream/create';
-import sequence from './stream/sequence';
-import parallel from './stream/parallel';
-import delay from './stream/delay';
-import fromValues from './stream/fromValues';
+import sequence from './stream/generators/sequence';
+import parallel from './stream/generators/parallel';
+import delay from './stream/generators/delay';
+import fromValues from './stream/generators/fromValues';
+import map from './stream/operators/map';
+import filter from './stream/operators/filter';
 
 class Visitor extends StremVisitor {
     constructor(context) {
@@ -67,7 +69,7 @@ class Visitor extends StremVisitor {
     }
 
     visitNamedSource(context) {
-        return this.context[context.getText()];
+        return this.visit(context.name());
     }
 
     visitChain(context) {
@@ -77,6 +79,18 @@ class Visitor extends StremVisitor {
     }
 
     visitNamedSourceFactory(context) {
+        return this.visit(context.name());
+    }
+
+    visitMap(context) {
+        return map(this.visit(context.name()));
+    }
+
+    visitFilter(context) {
+        return filter(this.visit(context.name()));
+    }
+
+    visitName(context) {
         return this.context[context.getText()];
     }
 }
@@ -118,7 +132,7 @@ const multiplier = (factor) => (source) => {
         stop: () => subscription.unsubscribe()
     });
 };
-const whizard = magic`1 | 1, delay 1s 2.5 -> ${multiplier(2)} | 3, delay 0.5s 4`;
+const whizard = magic`(1 | 1, delay 1s 2.5 -> map ${x => x * 2} | 3, delay 0.5s 4) -> filter ${x => x % 2 === 1}`;
 
 const subscription = whizard.subscribe({
     next: (value) => console.log(value),

@@ -17,7 +17,8 @@ source
 
 sourceFactory
   : name #namedSourceFactory
-  | '{' expression 'for' name ('where' expression)? '}' #comprehension
+  | 'map' name #map
+  | 'filter' name #filter
   ;
 
 expression

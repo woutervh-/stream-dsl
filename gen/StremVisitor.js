@@ -72,8 +72,14 @@ StremVisitor.prototype.visitNamedSourceFactory = function(ctx) {
 };
 
 
-// Visit a parse tree produced by StremParser#comprehension.
-StremVisitor.prototype.visitComprehension = function(ctx) {
+// Visit a parse tree produced by StremParser#map.
+StremVisitor.prototype.visitMap = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by StremParser#filter.
+StremVisitor.prototype.visitFilter = function(ctx) {
   return this.visitChildren(ctx);
 };
 

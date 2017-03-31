@@ -1,4 +1,4 @@
-import create from './create';
+import create from '../create';
 
 export default function sequence(left, right) {
     let leftSubscription;
