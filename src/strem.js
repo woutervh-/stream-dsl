@@ -115,7 +115,7 @@ function magic(input, ...streams) {
     return printer.visitProgram(tree);
 }
 
-const whizard = magic`(1.5 | 2, 2.5 -> delay 1s -> map ${x => x * 2} | 1, 2 -> delay 0.5s)`;
+const whizard = magic`(1.5 | 2, 2.5 -> delay 1s -> map ${x => x * 2} | 1, 2 -> delay 0.5s) -> filter ${x => x % 2 === 1} -> map ${x => x - 1}`;
 
 const subscription = whizard.subscribe({
     next: (value) => console.log(value),
