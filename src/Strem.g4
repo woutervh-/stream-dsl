@@ -9,10 +9,15 @@ source
   | 'delay' amount=NUMBER unit=('ms' | 's' | 'min' | 'h') source #delay
   | '[' expression (',' expression)* ']' #values
   | left=source ',' right=source #sequence
+  | left=source '->' sourceFactory #chain
   | left=source '|' right=source #parallel
-  | '{' expression 'for' name ('where' expression)? '}' #comprehension
   | name #namedSource
   | expression #singleSource
+  ;
+
+sourceFactory
+  : name #namedSourceFactory
+  | '{' expression 'for' name ('where' expression)? '}' #comprehension
   ;
 
 expression

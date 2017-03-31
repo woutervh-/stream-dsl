@@ -69,6 +69,16 @@ class Visitor extends StremVisitor {
     visitNamedSource(context) {
         return this.context[context.getText()];
     }
+
+    visitChain(context) {
+        const left = this.visit(context.left);
+        const sourceFactory = this.visit(context.sourceFactory());
+        return sourceFactory(left);
+    }
+
+    visitNamedSourceFactory(context) {
+        return this.context[context.getText()];
+    }
 }
 
 function magic(input, ...streams) {
@@ -92,18 +102,23 @@ function magic(input, ...streams) {
     return printer.visitProgram(tree);
 }
 
-const lastNumber = 5;
-const lastNumberStream = create({
-    start: (listener) => {
-        setTimeout(() => {
-            listener.next(lastNumber);
-        }, 2000);
-        setTimeout(() => {
-            listener.complete();
-        }, 4000);
-    }
-});
-const whizard = magic`1, delay 1s 4, ${lastNumberStream} | 2, delay 0.5s 3`;
+const multiplier = (factor) => (source) => {
+    let subscription;
+
+    return create({
+        start: (listener) => {
+            subscription = source.subscribe({
+                next: (value) => {
+                    listener.next(value * factor);
+                },
+                complete: () => listener.complete(),
+                error: (error) => listener.error(error)
+            });
+        },
+        stop: () => subscription.unsubscribe()
+    });
+};
+const whizard = magic`1 | 1, delay 1s 2.5 -> ${multiplier(2)} | 3, delay 0.5s 4`;
 
 const subscription = whizard.subscribe({
     next: (value) => console.log(value),
