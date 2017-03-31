@@ -6,11 +6,10 @@ program
 
 source
   : '(' source ')' #subSource
-  | 'delay' amount=NUMBER unit=('ms' | 's' | 'min' | 'h') source #delay
   | '[' expression (',' expression)* ']' #values
   | left=source ',' right=source #follow
-  | left=source '->' sourceFactory #compose
   | left=source '|' right=source #merge
+  | left=source '->' sourceFactory #compose
   | name #namedSource
   | expression #singleSource
   ;
@@ -19,6 +18,7 @@ sourceFactory
   : name #namedSourceFactory
   | 'map' name #map
   | 'filter' name #filter
+  | 'delay' amount=NUMBER unit=('ms' | 's' | 'min' | 'h') #delay
   ;
 
 expression

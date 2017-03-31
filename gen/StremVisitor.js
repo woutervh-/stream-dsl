@@ -18,12 +18,6 @@ StremVisitor.prototype.visitProgram = function(ctx) {
 };
 
 
-// Visit a parse tree produced by StremParser#delay.
-StremVisitor.prototype.visitDelay = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
 // Visit a parse tree produced by StremParser#namedSource.
 StremVisitor.prototype.visitNamedSource = function(ctx) {
   return this.visitChildren(ctx);
@@ -80,6 +74,12 @@ StremVisitor.prototype.visitMap = function(ctx) {
 
 // Visit a parse tree produced by StremParser#filter.
 StremVisitor.prototype.visitFilter = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by StremParser#delay.
+StremVisitor.prototype.visitDelay = function(ctx) {
   return this.visitChildren(ctx);
 };
 

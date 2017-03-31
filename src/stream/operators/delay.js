@@ -1,6 +1,6 @@
 import create from '../create';
 
-export default function delay(amount, source) {
+export default (amount) => (source) => {
     const timeouts = [];
     let subscription;
 

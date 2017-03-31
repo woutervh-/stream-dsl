@@ -5,10 +5,10 @@ import {StremVisitor} from '../gen/StremVisitor';
 import create from './stream/create';
 import follow from './stream/generators/follow';
 import merge from './stream/generators/merge';
-import delay from './stream/generators/delay';
 import fromValues from './stream/generators/fromValues';
 import map from './stream/operators/map';
 import filter from './stream/operators/filter';
+import delay from './stream/operators/delay';
 
 class Visitor extends StremVisitor {
     constructor(context) {
@@ -64,8 +64,7 @@ class Visitor extends StremVisitor {
             case 'ms':
                 break;
         }
-        const source = this.visit(context.source());
-        return delay(amount, source);
+        return delay(amount);
     }
 
     visitNamedSource(context) {
@@ -116,7 +115,7 @@ function magic(input, ...streams) {
     return printer.visitProgram(tree);
 }
 
-const whizard = magic`(1 | 1, delay 1s 2.5 -> map ${x => x * 2} | 3, delay 0.5s 4) -> filter ${x => x % 2 === 1}`;
+const whizard = magic`(1.5 | 2, 2.5 -> delay 1s -> map ${x => x * 2} | 1, 2 -> delay 0.5s)`;
 
 const subscription = whizard.subscribe({
     next: (value) => console.log(value),
