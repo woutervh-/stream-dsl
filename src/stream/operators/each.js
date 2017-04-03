@@ -77,7 +77,10 @@ export default (sourceFactory) => (source) => {
                 subscriptions[key].unsubscribe();
                 delete subscriptions[key];
             }
-            subscription.unsubscribe();
+            if (subscription) {
+                subscription.unsubscribe();
+                subscription = undefined;
+            }
         }
     });
 };

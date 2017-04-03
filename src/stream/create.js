@@ -1,14 +1,14 @@
 export default function create(producer) {
     const listeners = [];
-    let completed = false;
-    let errored = false;
     let started = false;
+    let finished = false;
+    let receivedError = false;
     let receivedValue = false;
     let rememberedError;
     let rememberedValue;
 
     const next = (value) => {
-        if (!completed && !errored) {
+        if (!finished) {
             rememberedValue = value;
             receivedValue = true;
             for (const listener of listeners) {
@@ -22,32 +22,39 @@ export default function create(producer) {
     };
 
     const complete = () => {
-        if (!completed && !errored) {
-            for (const listener of listeners) {
+        if (!finished) {
+            while (listeners.length >= 1) {
+                const listener = listeners.pop();
                 if (listener.complete) {
                     listener.complete();
                 }
             }
+            finished = true;
+            unsubscribe();
         } else {
             throw new Error('Producer cannot call complete after completion or error.');
         }
     };
 
     const error = (error) => {
-        if (!completed && !errored) {
+        if (!finished) {
             rememberedError = error;
-            for (const listener of listeners) {
+            receivedError = true;
+            while (listeners.length >= 1) {
+                const listener = listeners.pop();
                 if (listener.error) {
                     listener.error(error);
                 }
             }
+            finished = true;
+            unsubscribe();
         } else {
             throw new Error('Producer cannot call complete after completion or error.');
         }
     };
 
     const subscribe = () => {
-        if (!completed && !errored && !started) {
+        if (!finished && !started) {
             started = true;
             if (producer.start) {
                 producer.start({next, complete, error});
@@ -70,15 +77,27 @@ export default function create(producer) {
 
     return {
         subscribe: (listener) => {
-            listeners.push(listener);
-            if (listeners.length === 1) {
-                subscribe();
-            } else if (completed) {
-                listener.complete();
-            } else if (errored) {
-                listener.error(rememberedError);
-            } else if (receivedValue) {
-                listener.next(rememberedValue);
+            if (finished) {
+                if (receivedError) {
+                    if (listener.error) {
+                        listener.error(receivedError);
+                    }
+                } else {
+                    if (listener.complete) {
+                        listener.complete();
+                    }
+                }
+            } else {
+                listeners.push(listener);
+                if (started) {
+                    if (receivedValue) {
+                        if (listener.next) {
+                            listener.next(receivedValue);
+                        }
+                    }
+                } else {
+                    subscribe();
+                }
             }
             return {
                 unsubscribe: () => {

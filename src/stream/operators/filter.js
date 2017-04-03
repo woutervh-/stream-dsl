@@ -15,6 +15,11 @@ export default (filter) => (source) => {
                 error: (error) => listener.error(error)
             });
         },
-        stop: () => subscription.unsubscribe()
+        stop: () => {
+            if(subscription) {
+                subscription.unsubscribe();
+                subscription = undefined;
+            }
+        }
     });
 };
