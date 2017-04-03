@@ -3,9 +3,14 @@ export default function create(producer) {
     let completed = false;
     let errored = false;
     let started = false;
+    let receivedValue = false;
+    let rememberedError;
+    let rememberedValue;
 
     const next = (value) => {
         if (!completed && !errored) {
+            rememberedValue = value;
+            receivedValue = true;
             for (const listener of listeners) {
                 if (listener.next) {
                     listener.next(value);
@@ -30,6 +35,7 @@ export default function create(producer) {
 
     const error = (error) => {
         if (!completed && !errored) {
+            rememberedError = error;
             for (const listener of listeners) {
                 if (listener.error) {
                     listener.error(error);
@@ -67,6 +73,12 @@ export default function create(producer) {
             listeners.push(listener);
             if (listeners.length === 1) {
                 subscribe();
+            } else if (completed) {
+                listener.complete();
+            } else if (errored) {
+                listener.error(rememberedError);
+            } else if (receivedValue) {
+                listener.next(rememberedValue);
             }
             return {
                 unsubscribe: () => {

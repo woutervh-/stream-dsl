@@ -1,6 +1,6 @@
 import create from '../create';
 
-export default function follow(left, right) {
+export default (left, right) => {
     let leftSubscription;
     let rightSubscription;
 

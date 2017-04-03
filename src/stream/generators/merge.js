@@ -1,6 +1,6 @@
 import create from '../create';
 
-export default function merge(left, right) {
+export default (left, right) => {
     let leftSubscription;
     let rightSubscription;
     let leftCompleted = false;

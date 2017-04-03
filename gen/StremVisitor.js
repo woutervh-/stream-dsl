@@ -12,12 +12,6 @@ function StremVisitor() {
 StremVisitor.prototype = Object.create(antlr4.tree.ParseTreeVisitor.prototype);
 StremVisitor.prototype.constructor = StremVisitor;
 
-// Visit a parse tree produced by StremParser#program.
-StremVisitor.prototype.visitProgram = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
 // Visit a parse tree produced by StremParser#namedSource.
 StremVisitor.prototype.visitNamedSource = function(ctx) {
   return this.visitChildren(ctx);
@@ -32,12 +26,6 @@ StremVisitor.prototype.visitSubSource = function(ctx) {
 
 // Visit a parse tree produced by StremParser#compose.
 StremVisitor.prototype.visitCompose = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by StremParser#values.
-StremVisitor.prototype.visitValues = function(ctx) {
   return this.visitChildren(ctx);
 };
 
@@ -80,6 +68,12 @@ StremVisitor.prototype.visitFilter = function(ctx) {
 
 // Visit a parse tree produced by StremParser#delay.
 StremVisitor.prototype.visitDelay = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by StremParser#each.
+StremVisitor.prototype.visitEach = function(ctx) {
   return this.visitChildren(ctx);
 };
 

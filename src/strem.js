@@ -5,8 +5,9 @@ import {StremVisitor} from '../gen/StremVisitor';
 import create from './stream/create';
 import follow from './stream/generators/follow';
 import merge from './stream/generators/merge';
-import fromValues from './stream/generators/fromValues';
-import of from './stream/generators/fromValues';
+import each from './stream/operators/each';
+import from from './stream/generators/from';
+import of from './stream/generators/of';
 import map from './stream/operators/map';
 import filter from './stream/operators/filter';
 import delay from './stream/operators/delay';
@@ -100,6 +101,11 @@ class Visitor extends StremVisitor {
     visitName(context) {
         return this.context[context.getText()];
     }
+
+    visitEach(context) {
+        const sourceFactory = this.visit(context.name());
+        return each(sourceFactory);
+    }
 }
 
 export default function strem(input, ...streams) {
@@ -107,7 +113,7 @@ export default function strem(input, ...streams) {
     let result = '';
     for (let i = 0; i < input.length; i++) {
         if (i > 0) {
-            const key = '__internal_' + (i - 1);
+            const key = '__internal_strem_context_' + (i - 1);
             result += key;
             context[key] = (streams[i - 1]);
         }
