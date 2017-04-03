@@ -14,7 +14,7 @@ sourceFactory
   | 'map' name #map
   | 'filter' name #filter
   | 'delay' amount=NUMBER unit=('ms' | 's' | 'min' | 'h') #delay
-  | '{' '...' name '}' #each
+  | '{' '...' name? '}' #each
   ;
 
 expression

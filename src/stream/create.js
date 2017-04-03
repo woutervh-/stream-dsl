@@ -2,15 +2,9 @@ export default function create(producer) {
     const listeners = [];
     let started = false;
     let finished = false;
-    let receivedError = false;
-    let receivedValue = false;
-    let rememberedError;
-    let rememberedValue;
 
     const next = (value) => {
         if (!finished) {
-            rememberedValue = value;
-            receivedValue = true;
             for (const listener of listeners) {
                 if (listener.next) {
                     listener.next(value);
@@ -38,8 +32,6 @@ export default function create(producer) {
 
     const error = (error) => {
         if (!finished) {
-            rememberedError = error;
-            receivedError = true;
             while (listeners.length >= 1) {
                 const listener = listeners.pop();
                 if (listener.error) {
@@ -78,38 +70,24 @@ export default function create(producer) {
     return {
         subscribe: (listener) => {
             if (finished) {
-                if (receivedError) {
-                    if (listener.error) {
-                        listener.error(receivedError);
-                    }
-                } else {
-                    if (listener.complete) {
-                        listener.complete();
-                    }
-                }
+                throw new Error('Tried to subscribe to a stream that has completed or errored.');
             } else {
                 listeners.push(listener);
-                if (started) {
-                    if (receivedValue) {
-                        if (listener.next) {
-                            listener.next(receivedValue);
-                        }
-                    }
-                } else {
+                if (!started) {
                     subscribe();
                 }
-            }
-            return {
-                unsubscribe: () => {
-                    const index = listeners.indexOf(listener);
-                    if (index >= 0) {
-                        listeners.splice(index, 1);
-                        if (listeners.length === 0) {
-                            unsubscribe();
+                return {
+                    unsubscribe: () => {
+                        const index = listeners.indexOf(listener);
+                        if (index >= 0) {
+                            listeners.splice(index, 1);
+                            if (listeners.length === 0) {
+                                unsubscribe();
+                            }
                         }
                     }
-                }
-            };
+                };
+            }
         }
     };
 };

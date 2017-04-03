@@ -103,7 +103,8 @@ class Visitor extends StremVisitor {
     }
 
     visitEach(context) {
-        const sourceFactory = this.visit(context.name());
+        const name = context.name();
+        const sourceFactory = name ? this.visit(name) : (key, value) => of({[key]: value});
         return each(sourceFactory);
     }
 }

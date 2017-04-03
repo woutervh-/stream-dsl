@@ -69,8 +69,7 @@ export default (sourceFactory) => (source) => {
                         listener.error(error);
                     }
                 }
-            })
-            ;
+            });
         },
         stop: () => {
             for (const key of Object.keys(subscriptions)) {

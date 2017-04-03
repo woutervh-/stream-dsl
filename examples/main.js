@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import debounce from 'debounce';
 import strem from '../src/strem';
 import of from '../src/stream/generators/of';
+import pluck from '../src/stream/operators/pluck';
 
 CodeMirror.defineSimpleMode('simplemode', {
     start: [
@@ -64,8 +65,8 @@ class Controls extends React.Component {
     }
 }
 
-const myStream = strem`(1.5 | 2, 2.5 -> delay 1s -> map ${x => x * 2} | 1, 2 -> delay 0.5s) -> filter ${x => x % 2 === 1} -> map ${x => x - 1}`;
-// const myStream = strem`${of({foo: 1, bar: 2, not: 3})} -> {... ${(key, value) => key !== 'not' && of(value)}}`;
+// const myStream = strem`(1.5 | 2, 2.5 -> delay 1s -> map ${x => x * 2} | 1, 2 -> delay 0.5s) -> filter ${x => x % 2 === 1} -> map ${x => x - 1}`;
+const myStream = strem`${of({foo: 1, bar: 2, not: 3})} -> {... ${(key, value, source) => key !== 'not' && pluck(key)(source)}}`;
 
 let completed = false;
 const subscription = myStream.subscribe({
