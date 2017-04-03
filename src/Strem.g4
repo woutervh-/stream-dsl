@@ -2,7 +2,6 @@ grammar Strem;
 
 source
   : '(' source ')' #subSource
-  | '[' expression (',' expression)* ']' #values
   | left=source ',' right=source #follow
   | left=source '|' right=source #merge
   | left=source '->' sourceFactory #compose
@@ -22,8 +21,8 @@ expression
   | NUMBER #numberExpression
   | STRING #stringExpression
   | BOOLEAN #booleanExpression
-  | left=expression ('*' | '/' | '%') right=expression #multiplicative
-  | left=expression ('+' | '-') right=expression #additive
+  | left=expression operator=('*' | '/' | '%') right=expression #multiplicative
+  | left=expression operator=('+' | '-') right=expression #additive
   | name #namedExpression
   ;
 

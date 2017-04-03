@@ -23,13 +23,6 @@ class Visitor extends StremVisitor {
         return follow(left, right);
     }
 
-    visitValues(context) {
-        const values = this.visit(context.expression());
-        return values.reduce((left, right) => {
-            return follow(left, right);
-        });
-    }
-
     visitSingleSource(context) {
         return this.visit(context.expression());
     }
