@@ -6,6 +6,7 @@ import create from './stream/create';
 import follow from './stream/generators/follow';
 import merge from './stream/generators/merge';
 import fromValues from './stream/generators/fromValues';
+import of from './stream/generators/fromValues';
 import map from './stream/operators/map';
 import filter from './stream/operators/filter';
 import delay from './stream/operators/delay';
@@ -14,10 +15,6 @@ class Visitor extends StremVisitor {
     constructor(context) {
         super();
         this.context = context;
-    }
-
-    visitProgram(context) {
-        return this.visit(context.children[0]);
     }
 
     visitFollow(context) {
@@ -42,7 +39,21 @@ class Visitor extends StremVisitor {
     }
 
     visitNumberExpression(context) {
-        return fromValues([+context.getText()]);
+        return of(+context.getText());
+    }
+
+    visitStringExpression(context) {
+        return of(JSON.parse(context.getText()));
+    }
+
+    visitBooleanExpression(context) {
+        if (context.getText() === 'true') {
+            return of(true);
+        } else if (context.getText() === 'false') {
+            return of(false);
+        } else {
+            throw new Error('Boolean expression must be true or false');
+        }
     }
 
     visitMerge(context) {
@@ -71,14 +82,18 @@ class Visitor extends StremVisitor {
         return this.visit(context.name());
     }
 
+    visitNamedSourceFactory(context) {
+        return this.visit(context.name());
+    }
+
+    visitNamedExpression(context) {
+        return this.visit(context.name());
+    }
+
     visitCompose(context) {
         const source = this.visit(context.left);
         const sourceFactory = this.visit(context.sourceFactory());
         return sourceFactory(source);
-    }
-
-    visitNamedSourceFactory(context) {
-        return this.visit(context.name());
     }
 
     visitMap(context) {
@@ -110,7 +125,7 @@ export default function strem(input, ...streams) {
     const lexer = new StremLexer(chars);
     const tokens = new antlr4.CommonTokenStream(lexer);
     const parser = new StremParser(tokens);
-    const tree = parser.program();
-    const printer = new Visitor(context);
-    return printer.visitProgram(tree);
+    const tree = parser.source();
+    const visitor = new Visitor(context);
+    return visitor.visit(tree);
 }

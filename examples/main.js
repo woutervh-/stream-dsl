@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import debounce from 'debounce';
 import strem from '../src/strem';
+import of from '../src/stream/generators/of';
 
 CodeMirror.defineSimpleMode('simplemode', {
     start: [
@@ -63,15 +64,25 @@ class Controls extends React.Component {
     }
 }
 
-const myStream = strem`(1.5 | 2, 2.5 -> delay 1s -> map ${x => x * 2} | 1, 2 -> delay 0.5s) -> filter ${x => x % 2 === 1} -> map ${x => x - 1}`;
+// const myStream = strem`(1.5 | 2, 2.5 -> delay 1s -> map ${x => x * 2} | 1, 2 -> delay 0.5s) -> filter ${x => x % 2 === 1} -> map ${x => x - 1}`;
 
+const myStream = strem`${of({})}`;
+
+let completed = false;
 const subscription = myStream.subscribe({
     next: (value) => console.log(value),
     complete: () => {
-        subscription.unsubscribe();
+        if (subscription) {
+            subscription.unsubscribe();
+        } else {
+            completed = true;
+        }
         console.log('Completed!');
     },
     error: (error) => console.error(error)
 });
+if(completed) {
+    subscription.unsubscribe();
+}
 
 ReactDOM.render(<Controls/>, document.getElementById('controls'));

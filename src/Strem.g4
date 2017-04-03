@@ -1,17 +1,13 @@
 grammar Strem;
 
-program
-  : source
-  ;
-
 source
   : '(' source ')' #subSource
   | '[' expression (',' expression)* ']' #values
   | left=source ',' right=source #follow
   | left=source '|' right=source #merge
   | left=source '->' sourceFactory #compose
-  | name #namedSource
   | expression #singleSource
+  | name #namedSource
   ;
 
 sourceFactory
@@ -24,14 +20,18 @@ sourceFactory
 expression
   : '(' expression ')' #subExpression
   | NUMBER #numberExpression
-  | left=expression '*' right=expression #multiply
-  | left=expression '/' right=expression #divide
-  | left=expression '+' right=expression #add
-  | left=expression '-' right=expression #subtract
+  | STRING #stringExpression
+  | BOOLEAN #booleanExpression
+  | left=expression ('*' | '/' | '%') right=expression #multiplicative
+  | left=expression ('+' | '-') right=expression #additive
   | name #namedExpression
   ;
 
 name : ID;
+
+BOOLEAN
+  : 'true' | 'false'
+  ;
 
 ID
  : [a-zA-Z_] [0-9a-zA-Z_]*
@@ -60,12 +60,10 @@ NUMBER
 fragment INT
   : '0' | [1-9] [0-9]*
   ;
-// no leading zeros
 
 fragment EXP
   : [Ee] [+\-]? INT
   ;
-// \- since - means "range" inside [...]
 
 WS
   : [ \t\n\r] + -> skip

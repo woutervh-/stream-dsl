@@ -84,8 +84,8 @@ StremVisitor.prototype.visitDelay = function(ctx) {
 };
 
 
-// Visit a parse tree produced by StremParser#add.
-StremVisitor.prototype.visitAdd = function(ctx) {
+// Visit a parse tree produced by StremParser#stringExpression.
+StremVisitor.prototype.visitStringExpression = function(ctx) {
   return this.visitChildren(ctx);
 };
 
@@ -102,26 +102,26 @@ StremVisitor.prototype.visitNumberExpression = function(ctx) {
 };
 
 
-// Visit a parse tree produced by StremParser#subtract.
-StremVisitor.prototype.visitSubtract = function(ctx) {
+// Visit a parse tree produced by StremParser#multiplicative.
+StremVisitor.prototype.visitMultiplicative = function(ctx) {
   return this.visitChildren(ctx);
 };
 
 
-// Visit a parse tree produced by StremParser#divide.
-StremVisitor.prototype.visitDivide = function(ctx) {
-  return this.visitChildren(ctx);
-};
-
-
-// Visit a parse tree produced by StremParser#multiply.
-StremVisitor.prototype.visitMultiply = function(ctx) {
+// Visit a parse tree produced by StremParser#booleanExpression.
+StremVisitor.prototype.visitBooleanExpression = function(ctx) {
   return this.visitChildren(ctx);
 };
 
 
 // Visit a parse tree produced by StremParser#subExpression.
 StremVisitor.prototype.visitSubExpression = function(ctx) {
+  return this.visitChildren(ctx);
+};
+
+
+// Visit a parse tree produced by StremParser#additive.
+StremVisitor.prototype.visitAdditive = function(ctx) {
   return this.visitChildren(ctx);
 };
 
