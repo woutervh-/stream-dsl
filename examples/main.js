@@ -67,6 +67,7 @@ class Controls extends React.Component {
 
 // const myStream = strem`(1.5 | 2, 2.5 -> delay 1s -> map ${x => x * 2} | 1, 2 -> delay 0.5s) -> filter ${x => x % 2 === 1} -> map ${x => x - 1}`;
 const myStream = strem`${of({foo: 1, bar: 2, not: 3})} -> {... ${(key, value, source) => key !== 'not' && pluck(key)(source)}}`;
+// TODO: find a way to stay inside the strem tagged string while doing complete things inside {...}: {... [key] if key !== 'not'}
 
 let completed = false;
 const subscription = myStream.subscribe({
