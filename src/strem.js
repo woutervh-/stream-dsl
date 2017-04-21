@@ -3,14 +3,15 @@ import {StremLexer} from '../gen/StremLexer';
 import {StremParser} from '../gen/StremParser';
 import {StremVisitor} from '../gen/StremVisitor';
 import create from './stream/create';
-import follow from './stream/generators/follow';
-import merge from './stream/generators/merge';
-import each from './stream/operators/each';
+import follow from './stream/operators/follow';
+import merge from './stream/operators/merge';
 import from from './stream/generators/from';
 import of from './stream/generators/of';
+import each from './stream/operators/each';
 import map from './stream/operators/map';
 import filter from './stream/operators/filter';
 import delay from './stream/operators/delay';
+import pluck from './stream/operators/pluck';
 
 class Visitor extends StremVisitor {
     constructor(context) {
@@ -102,10 +103,12 @@ class Visitor extends StremVisitor {
         return this.context[context.getText()];
     }
 
+    visitStringExpression(context) {
+        return JSON.parse(context.getText());
+    }
+
     visitEach(context) {
-        const name = context.name();
-        const sourceFactory = name ? this.visit(name) : (key, value) => of({[key]: value});
-        return each(sourceFactory);
+        return each();
     }
 }
 

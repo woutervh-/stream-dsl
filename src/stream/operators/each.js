@@ -1,9 +1,35 @@
 import create from '../create';
 
-export default (sourceFactory) => (source) => {
+const sourceFactory = (key, source) => {
     let subscription;
-    let subscriptions = {};
-    let canSendNext = true;
+
+    return create({
+        start: (listener) => {
+            let previousValue = undefined;
+
+            subscription = source.subscribe({
+                next: (value) => {
+                    if (previousValue !== value) {
+                        previousValue = value;
+                        listener.next({key, value});
+                    }
+                },
+                error: (error) => listener.error(error),
+                complete: () => listener.complete()
+            });
+        },
+        stop: () => {
+            if (subscription) {
+                subscription.unsubscribe();
+                subscription = undefined;
+            }
+        }
+    });
+};
+
+export default () => (source) => {
+    let subscription;
+    let sources = {};
 
     return create({
         start: (listener) => {
@@ -11,46 +37,18 @@ export default (sourceFactory) => (source) => {
                 next: (value) => {
                     if (typeof value === 'object') {
                         for (const key of Object.keys(value)) {
-                            if (!subscriptions[key]) {
-                                const localSource = sourceFactory(key, value[key], source);
-                                if (localSource) {
-                                    let completedOrErrored = false;
-                                    subscriptions[key] = localSource.subscribe({
-                                        next: (value) => {
-                                            if (canSendNext) {
-                                                listener.next(value);
-                                            }
-                                        },
-                                        error: (error) => {
-                                            completedOrErrored = true;
-                                            if (canSendNext) {
-                                                canSendNext = false;
-                                                listener.error(error);
-                                            }
-                                        },
-                                        complete: () => {
-                                            completedOrErrored = true;
-                                            if (subscriptions[key]) {
-                                                subscriptions[key].unsubscribe();
-                                                delete subscriptions[key];
-                                            }
-                                        }
-                                    });
-                                    if (completedOrErrored) {
-                                        subscriptions[key].unsubscribe();
-                                        delete subscriptions[key];
-                                    }
-                                }
+                            if (!sources[key]) {
+                                sources[key] = sourceFactory(key, source)
                             }
                         }
-
                         const nextKeys = new Set(Object.keys(value));
-                        for (const key of Object.keys(subscriptions)) {
+                        for (const key of Object.keys(sources)) {
                             if (!nextKeys.has(key)) {
-                                subscriptions[key].unsubscribe();
-                                delete subscriptions[key];
+                                sources[key] = undefined;
+                                delete sources[key];
                             }
                         }
+                        listener.next(Object.keys(sources).map((key) => sources[key]));
                     } else {
                         // Silently ignore and pass on the value, give the user a warning
                         console.warn(`The 'each' operator expects incoming values of type object. Received a value of type ${typeof value}.`);
@@ -58,23 +56,17 @@ export default (sourceFactory) => (source) => {
                     }
                 },
                 complete: () => {
-                    if (canSendNext) {
-                        canSendNext = false;
-                        listener.complete();
-                    }
+                    listener.complete();
                 },
                 error: (error) => {
-                    if (canSendNext) {
-                        canSendNext = false;
-                        listener.error(error);
-                    }
+                    listener.error(error);
                 }
             });
         },
         stop: () => {
-            for (const key of Object.keys(subscriptions)) {
-                subscriptions[key].unsubscribe();
-                delete subscriptions[key];
+            for (const key of Object.keys(sources)) {
+                sources[key] = undefined;
+                delete sources[key];
             }
             if (subscription) {
                 subscription.unsubscribe();
