@@ -1,30 +1,35 @@
 import create from '../create';
 
-const sourceFactory = (key, source) => {
+const streamFactory = (key, source) => {
     let subscription;
 
-    return create({
-        start: (listener) => {
-            let previousValue = undefined;
+    return {
+        stream: create({
+            start: (listener) => {
+                let previousValue = undefined;
 
-            subscription = source.subscribe({
-                next: (value) => {
-                    if (previousValue !== value) {
-                        previousValue = value;
-                        listener.next({key, value});
-                    }
-                },
-                error: (error) => listener.error(error),
-                complete: () => listener.complete()
-            });
-        },
-        stop: () => {
-            if (subscription) {
-                subscription.unsubscribe();
-                subscription = undefined;
+                subscription = source.subscribe({
+                    next: (value) => {
+                        if (previousValue !== value) {
+                            previousValue = value;
+                            listener.next({key, value});
+                        }
+                    },
+                    error: (error) => listener.error(error),
+                    complete: () => listener.complete()
+                });
+            },
+            stop: () => {
+                if (subscription) {
+                    subscription.unsubscribe();
+                    subscription = undefined;
+                }
             }
+        }),
+        stop: () => {
+            // TODO
         }
-    });
+    };
 };
 
 export default () => (source) => {
@@ -38,7 +43,9 @@ export default () => (source) => {
                     if (typeof value === 'object') {
                         for (const key of Object.keys(value)) {
                             if (!sources[key]) {
-                                sources[key] = sourceFactory(key, source)
+                                const {stream, stop} = streamFactory(key, source);
+                                sources[key] = stream;
+                                listener.next(stream);
                             }
                         }
                         const nextKeys = new Set(Object.keys(value));
@@ -48,7 +55,6 @@ export default () => (source) => {
                                 delete sources[key];
                             }
                         }
-                        listener.next(Object.keys(sources).map((key) => sources[key]));
                     } else {
                         // Silently ignore and pass on the value, give the user a warning
                         console.warn(`The 'each' operator expects incoming values of type object. Received a value of type ${typeof value}.`);
